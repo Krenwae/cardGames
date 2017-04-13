@@ -29,7 +29,7 @@ $(function(){
   console.log(builtDeck[0])
 
 
-  //Nothing after this works, and I don't know why?
+  //This following function will display the name of the first suffled card when the box is clicked
 
   $('.cardBack').on('click', function(){
 
