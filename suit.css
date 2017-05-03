@@ -1,0 +1,157 @@
+html {
+  font-size: 200px ;
+}
+
+body {
+  background-color: lightcyan;
+}
+
+.suit {
+  height: 1rem;
+  width: 1rem;
+  border: .025rem solid black;
+  position: fixed;
+}
+
+.Spades {
+  top: .5rem;
+  left: .5rem
+}
+
+.Hearts {
+  top: .5rem;
+  left: 2rem
+}
+
+.Clubs {
+  top: 2rem;
+  left: .5rem;
+}
+
+.Diamonds {
+  top: 2rem;
+  left: 2rem;
+}
+
+
+.spadeMiddle {
+  height: .4rem;
+  width: .4rem;
+  background-color: black;
+  transform: rotate(45deg);
+  position: relative;
+  top: .25rem;
+  left:.3rem;
+}
+
+.spadeLeft {
+  height: .4rem;
+  width: .4rem;
+  border-radius: .2rem;
+  background-color: black;
+  position: relative;
+  top: -.03rem;
+  left: .18rem;
+}
+
+.spadeRight {
+  height: .4rem;
+  width: .4rem;
+  border-radius: .2rem;
+  background-color: black;
+  position: relative;
+  top: -.43rem;
+  left: .42rem;
+}
+
+.spadeBottom {
+  height: .1rem;
+  width: .1rem;
+  border-bottom-right-radius: .1rem;
+  background-color: black;
+  transform: rotate(45deg) skew(20deg, 20deg);
+  position: relative;
+  top: -.45rem;
+  left: .45rem;
+}
+
+.heartMiddle {
+  height: .4rem;
+  width: .4rem;
+  background-color: red;
+  transform: rotate(45deg);
+  position: relative;
+  top: .35rem;
+  left:.3rem;
+}
+
+.heartLeft {
+  height: .4rem;
+  width: .4rem;
+  border-radius: .2rem;
+  background-color: red;
+  position: relative;
+  top: -.17rem;
+  left: .18rem;
+}
+
+.heartRight {
+  height: .4rem;
+  width: .4rem;
+  border-radius: .2rem;
+  background-color: red;
+  position: relative;
+  top: -.57rem;
+  left: .42rem;
+}
+
+.clubTop {
+  height: .4rem;
+  width: .4rem;
+  border-radius: .2rem;
+  background-color: black;
+  position: relative;
+  top: .1rem;
+  left: .3rem;
+}
+
+.clubLeft {
+  height: .4rem;
+  width: .4rem;
+  border-radius: .2rem;
+  background-color: black;
+  position: relative;
+  top: 0rem;
+  left: .13rem;
+}
+
+.clubRight {
+  height: .4rem;
+  width: .4rem;
+  border-radius: .2rem;
+  background-color: black;
+  position: relative;
+  top: -.4rem;
+  left: .47rem;
+}
+
+.clubBottom {
+  height: .1rem;
+  width: .1rem;
+  border-bottom-right-radius: .1rem;
+  background-color: black;
+  transform: rotate(45deg) skew(20deg, 20deg);
+  position: relative;
+  top: -.46rem;
+  left: .45rem;
+}
+
+.diamond {
+  height: .5rem;
+  width: .5rem;
+  background-color: red;
+  transform: rotate(45deg) skew(15deg, 15deg);
+  position: relative;
+  top: .25rem;
+  left:.25rem;
+}
