@@ -1,0 +1,66 @@
+html {
+  font-size: 10px;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  padding: 0;
+  margin: 0;
+  background-color: lightcyan;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+}
+
+.cardBack {
+  margin: 1rem;
+  height: 35rem;
+  width: 25rem;
+  background-color: pink;
+  position: relative;
+  top: 0;
+  border: .5rem solid black;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: .8rem .8rem .3rem 0 grey;
+  transition: top .3s ease-in, box-shadow .3s ease-in;
+}
+
+.cardFront {
+  margin: 1rem;
+  height: 35rem;
+  width: 25rem;
+  background-color: white;
+  position: relative;
+  top: 0;
+  border: .5rem solid black;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: .8rem .8rem .3rem 0 grey;
+  transition: top .3s ease-in, box-shadow .3s ease-in;
+}
+
+.buttons {
+  margin: 2rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.button {
+  margin: 1rem;
+  height: 2rem;
+  width: 8rem;
+  background-color: lightgreen;
+  font color: black;
+}
