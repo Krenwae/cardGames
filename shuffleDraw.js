@@ -56,7 +56,7 @@ $(function(){
     console.log(shuffledDeck[0]);
 
     //displays the top card
-    $(".cardBack").html(shuffledDeck[0].num+ " of "+shuffledDeck[0].suit);
+    $('.cardBack').html(shuffledDeck[0].num+ " of "+shuffledDeck[0].suit);
 
     //returns the shuffled deck as the deck to use
     builtDeck = shuffledDeck;
