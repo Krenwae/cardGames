@@ -1,0 +1,228 @@
+html {
+  font-size: 10px;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  padding: 0;
+  margin: 0;
+  background-color: lightcyan;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+}
+
+.cardBack {
+  margin: 1rem;
+  height: 35rem;
+  width: 25rem;
+  background-color: pink;
+  position: relative;
+  top: 0;
+  border: .5rem solid black;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: .8rem .8rem .3rem 0 grey;
+  transition: top .3s ease-in, box-shadow .3s ease-in;
+}
+
+.cardFront {
+  margin: 1rem;
+  height: 35rem;
+  width: 25rem;
+  background-color: white;
+  position: relative;
+  top: 0;
+  border: .5rem solid black;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: .8rem .8rem .3rem 0 grey;
+  transition: top .3s ease-in, box-shadow .3s ease-in;
+}
+
+
+.TL {
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.TR {
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.BL {
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.BR {
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.cardNum {
+  position: absolute;
+  text-align: center;
+  font-size: 10rem;
+}
+
+.spadeMiddle {
+  height: 2em;
+  width: 2em;
+  background-color: black;
+  transform: rotate(45deg);
+  position: relative;
+  top: 1.25em;
+  left: 1.5em;
+}
+
+.spadeLeft {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  background-color: black;
+  position: relative;
+  top: -.15em;
+  left: .9em;
+}
+
+.spadeRight {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  background-color: black;
+  position: relative;
+  top: -2.15em;
+  left: 2.1em;
+}
+
+.spadeBottom {
+  height: .5em;
+  width: .5em;
+  border-bottom-right-radius: .5em;
+  background-color: black;
+  transform: rotate(45deg) skew(20deg, 20deg);
+  position: relative;
+  top: -2.25em;
+  left: 2.25em;
+}
+
+.heartMiddle {
+  height: 2em;
+  width: 2em;
+  background-color: red;
+  transform: rotate(45deg);
+  position: relative;
+  top: 1.75em;
+  left: 1.5em;
+}
+
+.heartLeft {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  background-color: red;
+  position: relative;
+  top: -.85em;
+  left: .9em;
+}
+
+.heartRight {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  background-color: red;
+  position: relative;
+  top: -2.85em;
+  left: 2.10em;
+}
+
+.clubTop {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  background-color: black;
+  position: relative;
+  top: .5em;
+  left: 1.5em;
+}
+
+.clubLeft {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  background-color: black;
+  position: relative;
+  top: 0;
+  left: .65em;
+}
+
+.clubRight {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  background-color: black;
+  position: relative;
+  top: -2em;
+  left: 2.35em;
+}
+
+.clubBottom {
+  height: .5em;
+  width: .5em;
+  border-bottom-right-radius: .5em;
+  background-color: black;
+  transform: rotate(45deg) skew(20deg, 20deg);
+  position: relative;
+  top: -2.3em;
+  left: 2.25em;
+}
+
+.diamond {
+  height: 2.5em;
+  width: 2.5em;
+  background-color: red;
+  transform: rotate(45deg) skew(15deg, 15deg);
+  position: relative;
+  top: 1.25em;
+  left: 1.25em;
+}
+
+.buttons {
+  margin: 2rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.button {
+  font-size: 1rem;
+  margin: 1rem;
+  height: 2rem;
+  width: 8rem;
+  background-color: lightgreen;
+  font color: black;
+}

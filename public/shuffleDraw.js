@@ -3,14 +3,14 @@ $(function(){
 
   // These are the variables that help build the deck
   var empty = [];
-  var suit = ["Spades", "Hearts", "Clubs", "Diamonds"];
-  var court = ["Jack", "Queen", "King"];
-  var ace = [0, "Ace"];
+  var suit = ["Spades", "Clubs", "Hearts", "Diamonds"];
+  var court = ["J", "Q", "K"];
+  var ace = [0, "A"];
   var Spades = '<div class="spadeMiddle"></div><div class="spadeLeft"></div><div class="spadeRight"></div><div class="spadeBottom">';
   var Hearts = '<div class="heartMiddle"></div><div class="heartLeft"></div><div class="heartRight"></div>';
   var Clubs = '<div class="clubTop"></div><div class="clubLeft"></div><div class="clubRight"></div><div class="clubBottom"></div>';
   var Diamonds = '<div class="diamond"></div>';
-  var pic = [Spades, Hearts, Clubs, Diamonds]
+  var pic = [Spades, Clubs, Hearts, Diamonds]
 
   // This is the function that builds the deck
   function buildDeck(deck){
@@ -25,7 +25,8 @@ $(function(){
             num: j,
             value: ace[j],
             suit: suit[i],
-            pic: pic[i]
+            pic: pic[i],
+            color: i
           });
             // ace[j]+" of "+suit[i])
         } else if(j<11) {
@@ -33,15 +34,17 @@ $(function(){
             num: j,
             value: j,
             suit: suit[i],
-            pic: pic[i]
+            pic: pic[i],
+            color: i
           });
             // j+" of "+suit[i])
         } else {
           deck.push({
             num: j,
             value: court[j-11],
-            suit: suit[i]
-            pic: pic[i]
+            suit: suit[i],
+            pic: pic[i],
+            color: i
           });
             // court[j-11]+" of "+suit[i])
         };
@@ -54,7 +57,7 @@ $(function(){
 
   // A variable defines the built deck, so it can be used later
   var builtDeck = buildDeck(empty);
-  console.log(builtDeck[0]);
+  console.log(builtDeck);
 
 
   //This following function will shuffle the deck and display the top card on the left. It can be used multiple times.
@@ -65,7 +68,7 @@ $(function(){
     console.log(shuffledDeck[0]);
 
     //displays the top card
-    $('.cardBack').html(shuffledDeck[0].num+ " of "+shuffledDeck[0].suit);
+    $('.cardBack').html(shuffledDeck[0].value+ " of "+shuffledDeck[0].suit);
 
     //returns the shuffled deck as the deck to use
     builtDeck = shuffledDeck;
@@ -94,7 +97,11 @@ $(function(){
   $('#draw').on('click', function(){
 
     //The name of the card is displayed
-    $(".cardNum").html(builtDeck[0].num+ " of "+builtDeck[0].suit);
+    if (builtDeck[0].color > 1) {
+      $(".cardNum").html("<span style='color: red;'>" + builtDeck[0].value +"</span>")
+    } else {
+      $(".cardNum").html(builtDeck[0].value)
+    };
 
     //and the suit pic appears in the four corners
     $('.TL').html(builtDeck[0].pic);
@@ -102,7 +109,7 @@ $(function(){
     $('.BL').html(builtDeck[0].pic);
     $('.BR').html(builtDeck[0].pic);
 
-    //then that card is removed from the array
+    //then that card is moved from the deck to the draw pile
     builtDeck.splice(0, 1);
     console.log(builtDeck);
   });
