@@ -169,25 +169,33 @@ body {
 }
 
 .TL {
-position: relative;
+width: 5rem;
+height: 5rem;
+position: inherit;
 top: 0;
 left: 0;
 }
 
 .TR {
-position: relative;
-top: -6.5rem;
-right: -20rem;
+width: 5rem;
+height: 5rem;
+position: inherit;
+top: 0;
+right: 0;
 }
 
 .BL {
-position: relative;
-bottom: -17rem;
+width: 5rem;
+height: 5rem;
+position: inherit;
+bottom: 0;
 left: 0;
 }
 
 .BR {
-position: relative;
-bottom: -10.5rem;
-right: -20rem;
+width: 5rem;
+height: 5rem;
+position: inherit;
+bottom: 0;
+right: 0;
 }

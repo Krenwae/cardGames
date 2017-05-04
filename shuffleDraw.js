@@ -2,12 +2,15 @@
 $(function(){
 
   // These are the variables that help build the deck
-  var empty = [
-
-  ];
+  var empty = [];
   var suit = ["Spades", "Hearts", "Clubs", "Diamonds"];
   var court = ["Jack", "Queen", "King"];
   var ace = [0, "Ace"];
+  var Spades = '<div class="spadeMiddle"></div><div class="spadeLeft"></div><div class="spadeRight"></div><div class="spadeBottom">';
+  var Hearts = '<div class="heartMiddle"></div><div class="heartLeft"></div><div class="heartRight"></div>';
+  var Clubs = '<div class="clubTop"></div><div class="clubLeft"></div><div class="clubRight"></div><div class="clubBottom"></div>';
+  var Diamonds = '<div class="diamond"></div>';
+  var pic = [Spades, Hearts, Clubs, Diamonds]
 
   // This is the function that builds the deck
   function buildDeck(deck){
@@ -19,20 +22,26 @@ $(function(){
       for(j=1; j<14; j++){
         if(j<2){
           deck.push({
-            num: ace[j],
-            suit: suit[i]
+            num: j,
+            value: ace[j],
+            suit: suit[i],
+            pic: pic[i]
           });
             // ace[j]+" of "+suit[i])
         } else if(j<11) {
           deck.push({
             num: j,
-            suit: suit[i]
+            value: j,
+            suit: suit[i],
+            pic: pic[i]
           });
             // j+" of "+suit[i])
         } else {
           deck.push({
-            num: court[j-11],
+            num: j,
+            value: court[j-11],
             suit: suit[i]
+            pic: pic[i]
           });
             // court[j-11]+" of "+suit[i])
         };
@@ -85,7 +94,13 @@ $(function(){
   $('#draw').on('click', function(){
 
     //The name of the card is displayed
-    $(".cardFront").html(builtDeck[0].num+ " of "+builtDeck[0].suit);
+    $(".cardNum").html(builtDeck[0].num+ " of "+builtDeck[0].suit);
+
+    //and the suit pic appears in the four corners
+    $('.TL').html(builtDeck[0].pic);
+    $('.TR').html(builtDeck[0].pic);
+    $('.BL').html(builtDeck[0].pic);
+    $('.BR').html(builtDeck[0].pic);
 
     //then that card is removed from the array
     builtDeck.splice(0, 1);
