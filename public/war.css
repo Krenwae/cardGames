@@ -77,7 +77,7 @@ body {
 
 .cflip {
   top: -8rem;
-  transform: rotate(180deg);
+  transform: scaleY(1);
 }
 
 .TL {

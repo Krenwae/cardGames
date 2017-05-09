@@ -181,6 +181,7 @@ $(function(){
 
   function tie() {
 
+
   };
 
   function toTrophy(input) {
