@@ -15,6 +15,7 @@ body {
  top: 0;
  position: fixed;
  background-color: red;
+ z-index: 3;
 }
 
 .container {
@@ -34,6 +35,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transform: perspective(600px) rotateX(50deg);
+  z-index: 2;
 }
 
 .playSpace {
@@ -47,11 +50,194 @@ body {
   background-color: pink;
 }
 
+.pDraw {
+  transform: scaleY(0);
+}
+
+.cDraw {
+  transform: scaleY(0);
+}
+
 .draw {
   position: relative;
-  top: -8rem;
+  top: -4rem;
   left: 21.5rem;
   background-color: white;
+  font-size: 0.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: top .5s linear, transform .5s linear;
+}
+
+.pflip {
+  top: -8rem;
+  transform: scaleY(1);
+}
+
+.cflip {
+  top: -8rem;
+  transform: rotate(180deg);
+}
+
+.TL {
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.TR {
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.BL {
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.BR {
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.cardNum {
+  position: absolute;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.spadeMiddle {
+  height: 2em;
+  width: 2em;
+  background-color: black;
+  transform: rotate(45deg);
+  position: relative;
+  top: 1.25em;
+  left: 1.5em;
+}
+
+.spadeLeft {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  background-color: black;
+  position: relative;
+  top: -.15em;
+  left: .9em;
+}
+
+.spadeRight {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  background-color: black;
+  position: relative;
+  top: -2.15em;
+  left: 2.1em;
+}
+
+.spadeBottom {
+  height: .5em;
+  width: .5em;
+  border-bottom-right-radius: .5em;
+  background-color: black;
+  transform: rotate(45deg) skew(20deg, 20deg);
+  position: relative;
+  top: -2.25em;
+  left: 2.25em;
+}
+
+.heartMiddle {
+  height: 2em;
+  width: 2em;
+  background-color: red;
+  transform: rotate(45deg);
+  position: relative;
+  top: 1.75em;
+  left: 1.5em;
+}
+
+.heartLeft {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  background-color: red;
+  position: relative;
+  top: -.85em;
+  left: .9em;
+}
+
+.heartRight {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  background-color: red;
+  position: relative;
+  top: -2.85em;
+  left: 2.10em;
+}
+
+.clubTop {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  background-color: black;
+  position: relative;
+  top: .5em;
+  left: 1.5em;
+}
+
+.clubLeft {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  background-color: black;
+  position: relative;
+  top: 0;
+  left: .65em;
+}
+
+.clubRight {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  background-color: black;
+  position: relative;
+  top: -2em;
+  left: 2.35em;
+}
+
+.clubBottom {
+  height: .5em;
+  width: .5em;
+  border-bottom-right-radius: .5em;
+  background-color: black;
+  transform: rotate(45deg) skew(20deg, 20deg);
+  position: relative;
+  top: -2.3em;
+  left: 2.25em;
+}
+
+.diamond {
+  height: 2.5em;
+  width: 2.5em;
+  background-color: red;
+  transform: rotate(45deg) skew(15deg, 15deg);
+  position: relative;
+  top: 1.25em;
+  left: 1.25em;
 }
 
 .trophy {
@@ -61,7 +247,7 @@ body {
   background-color: pink;
 }
 
-.opponent {
+.com {
   transform: rotate(180deg);
 }
 
@@ -77,4 +263,12 @@ body {
   bottom: 0;
   position: fixed;
   background-color: blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+button {
+  margin: 1rem;
 }

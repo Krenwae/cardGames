@@ -13,31 +13,32 @@
 
   <body>
     <div class="header">
+      <h1 class="outcome"></h1>
     </div>
     <div class="container">
       <div class="board">
-        <div class="opponent playSpace">
-          <div class="oDeck deck pile">
+        <div class="com playSpace">
+          <div class="cDeck deck pile">
           </div>
-          <div class="oDraw draw pile">
-            <div class="TL"></div>
-            <div class="TR"></div>
-            <div class="BL"></div>
-            <div class="BR"></div>
-            <div class="CardNum"></div>
+          <div class="cDraw draw pile">
+            <div class="cTL TL"></div>
+            <div class="cTR TR"></div>
+            <div class="cBL BL"></div>
+            <div class="cBR BR"></div>
+            <div class="cCardNum cardNum"></div>
           </div>
-          <div class="oTrophy trophy pile">
+          <div class="cTrophy trophy pile">
           </div>
         </div>
         <div class="player playSpace">
           <div class="pDeck deck pile">
           </div>
           <div class="pDraw draw pile">
-            <div class="TL"></div>
-            <div class="TR"></div>
-            <div class="BL"></div>
-            <div class="BR"></div>
-            <div class="CardNum"></div>
+            <div class="pTL TL"></div>
+            <div class="pTR TR"></div>
+            <div class="pBL BL"></div>
+            <div class="pBR BR"></div>
+            <div class="pCardNum cardNum"></div>
           </div>
           <div class="pTrophy trophy pile">
           </div>
@@ -45,6 +46,8 @@
       </div>
     </div>
     <div class="footer">
+      <button class="drawButton">Draw</button>
+      <button class="collectButton">Collect</button>
     </div>
   </body>
 
