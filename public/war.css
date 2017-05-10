@@ -28,6 +28,8 @@ body {
 }
 
 .board {
+  position: relative;
+  top: -5rem;
   height: 50rem;
   width: 70rem;
   background: repeating-radial-gradient(darkgreen, green 50%, black 100%);
@@ -76,11 +78,11 @@ body {
 }
 
 .pDraw {
-  transform: scaleY(0);
+  transform: rotateX(90deg);
 }
 
 .cDraw {
-  transform: scaleY(0);
+  transform: rotateX(90deg);
 }
 
 .draw {
@@ -88,7 +90,7 @@ body {
   height: 7rem;
   width: 5rem;
   position: relative;
-  top: -4rem;
+  top: 0rem;
   left: 21.5rem;
   background-color: white;
   font-size: 0.2rem;
@@ -100,12 +102,12 @@ body {
 
 .pflip {
   top: -8rem;
-  transform: scaleY(1);
+  transform: rotateX(0deg);
 }
 
 .cflip {
   top: -8rem;
-  transform: scaleY(1);
+  transform: rotateX(0deg);
 }
 
 .TL {
