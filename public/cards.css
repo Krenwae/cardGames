@@ -7,7 +7,7 @@ body {
   width: 100vw;
   padding: 0;
   margin: 0;
-  background-color: lightcyan;
+  background-color: green;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,10 +23,18 @@ body {
   margin: 1rem;
   height: 35rem;
   width: 25rem;
-  background-color: pink;
+  background-color: blue;
+  /*background-image: repeating-linear-gradient(0deg, rgba(0, 0, 127, .5), rgba(0, 0, 127, .5) .3rem, rgba(255, 60, 60, .5) .3rem, rgba(255, 60, 60, .5) 2rem, rgba(0, 0, 0, .5) 2rem, rgba(0, 0, 0, .5) 2.5rem, rgba(255, 255, 255, .5) 2.5rem, rgba(255, 255, 255, .5) 3rem, rgba(0, 0, 0, .5) 3rem, rgba(0, 0, 0, .5) 3.5rem, rgba(255, 60, 60, .5) 3.5rem, rgba(255, 60, 60, .5) 5rem),
+  repeating-linear-gradient(90deg, rgba(0, 0, 127, .5), rgba(0, 0, 127, .5) .3rem, rgba(255, 60, 60, .5) .3rem, rgba(255, 60, 60, .5) 2rem, rgba(0, 0, 0, .5) 2rem, rgba(0, 0, 0, .5) 2.5rem, rgba(255, 255, 255, .5) 2.5rem, rgba(255, 255, 255, .5) 3rem, rgba(0, 0, 0, .5) 3rem, rgba(0, 0, 0, .5) 3.5rem, rgba(255, 60, 60, .5) 3.5rem, rgba(255, 60, 60, .5) 5rem),
+  repeating-linear-gradient(45deg, rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)  1%, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, .5) 2%, rgba(0, 0, 0, .5) 4%, rgba(0, 0, 0, 0) 4%, rgba(0, 0, 0, 0) 5%),
+  repeating-linear-gradient(-45deg, rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)  1%, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, .3) 2%, rgba(0, 0, 0, .3) 4%, rgba(0, 0, 0, 0) 4%, rgba(0, 0, 0, 0) 5%);*/
+  background-image: repeating-linear-gradient(0deg, rgba(127, 0, 0, .5), rgba(127, 0, 0, .5) .3rem, rgba(60, 60, 255, .5) .3rem, rgba(60, 60, 255, .5) 2rem, rgba(0, 0, 0, .5) 2rem, rgba(0, 0, 0, .5) 2.5rem, rgba(255, 255, 255, .5) 2.5rem, rgba(255, 255, 255, .5) 3rem, rgba(0, 0, 0, .5) 3rem, rgba(0, 0, 0, .5) 3.5rem, rgba(60, 60, 255, .5) 3.5rem, rgba(60, 60, 255, .5) 5rem),
+  repeating-linear-gradient(90deg, rgba(127, 0, 0, .5), rgba(127, 0, 0, .5) .3rem, rgba(60, 60, 255, .5) .3rem, rgba(60, 60, 255, .5) 2rem, rgba(0, 0, 0, .5) 2rem, rgba(0, 0, 0, .5) 2.5rem, rgba(255, 255, 255, .5) 2.5rem, rgba(255, 255, 255, .5) 3rem, rgba(0, 0, 0, .5) 3rem, rgba(0, 0, 0, .5) 3.5rem, rgba(60, 60, 255, .5) 3.5rem, rgba(60, 60, 255, .5) 5rem),
+  repeating-linear-gradient(45deg, rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)  1%, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, .5) 2%, rgba(0, 0, 0, .5) 4%, rgba(0, 0, 0, 0) 4%, rgba(0, 0, 0, 0) 5%),
+  repeating-linear-gradient(-45deg, rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)  1%, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, .3) 2%, rgba(0, 0, 0, .3) 4%, rgba(0, 0, 0, 0) 4%, rgba(0, 0, 0, 0) 5%);
   position: relative;
   top: 0;
-  border: .5rem solid black;
+  border: .5rem solid rgb(220, 220, 220);
   border-radius: 1rem;
   display: flex;
   justify-content: center;

@@ -87,7 +87,7 @@ $(function(){
   };
 
   //This function runs the comparison feature of the game. When a button is pushed, the cards are drawn, then their values are compared, then the winner is decided. At a tie, a do-over round is completed. Then, if either player has no deck, their trophy pile is shuffled into a new one. If they have no trophy pile, they loose.
-  $('.drawButton').on('click', draw());
+  $('.drawButton').on('click', draw );
 
   function draw() {
 
@@ -132,10 +132,12 @@ $(function(){
     console.log(winner);
     console.log(playerDeck.length);
 
-  });
+  };
 
   //move cards to trophy pile depending on winner
-  $('.collectButton').on('click', function(){
+  $('.collectButton').on('click', collection);
+
+  function collection() {
 
     if (busy) {
       toTrophy(winner);
@@ -151,7 +153,7 @@ $(function(){
     console.log(comDraw);
     console.log(comDeck);
 
-  });
+  };
 
   //this function compares two drawn cards
   function compare(card1, card2) {
@@ -165,10 +167,12 @@ $(function(){
 
       busy = 0;
 
-      //then a new card is drawn for each player
+      //..then a new card is drawn for each player
       draw();
 
     } else if (card1 == 1) {
+
+      //if either card is an ace, special rules apply. Ace beats everything except a two
       if (card2 == 2){
         return 0
       } else {
@@ -181,6 +185,8 @@ $(function(){
         return 0
       }
     } else {
+
+      //In all other cases, higher card wins.
       if (card1 > card2) {
         return 1
       } else {
@@ -263,8 +269,10 @@ $(function(){
 
   };
 
+  //Once a winner is defined, all cards in the loot and draw piles are moved to the winner's trophy pile
   function toTrophy(input) {
 
+    //If player wins:
     if (input) {
       playerTrophy.push(playerDraw[0], comDraw[0]);
       playerDraw.shift();
@@ -283,6 +291,8 @@ $(function(){
         comLoot.splice(element, 1);
       });
     } else {
+
+      //if com wins:
       comTrophy.push(playerDraw[0], comDraw[0]);
       playerDraw.shift();
       comDraw.shift();
