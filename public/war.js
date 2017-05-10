@@ -87,7 +87,9 @@ $(function(){
   };
 
   //This function runs the comparison feature of the game. When a button is pushed, the cards are drawn, then their values are compared, then the winner is decided. At a tie, a do-over round is completed. Then, if either player has no deck, their trophy pile is shuffled into a new one. If they have no trophy pile, they loose.
-  $('.drawButton').on('click', function(){
+  $('.drawButton').on('click', draw());
+
+  function draw() {
 
     //the busy var prevents the function from running while it is running
     if (busy) {
@@ -154,9 +156,18 @@ $(function(){
   //this function compares two drawn cards
   function compare(card1, card2) {
 
-    //If cards are identical, a 'war' occurs. If either card is an ace, special rules apply. Every other case, higher card value wins. If player wins, return true. if com wins, return false.
+    //If player wins, return true. if com wins, return false.
     if (card1 == card2) {
-      tie()
+
+      //if Cards are of equal value, a 'war' occurs. Three(or as many as possible) cards are drawn into a 'loot' pile...
+      var tie = tie();
+      if(tie == 'stalemate'){return};
+
+      busy = 0;
+
+      //then a new card is drawn for each player
+      draw();
+
     } else if (card1 == 1) {
       if (card2 == 2){
         return 0
@@ -179,8 +190,76 @@ $(function(){
 
   };
 
+  //special rules occur if there is a tie
   function tie() {
 
+    //the drawn cards are moved into the loot pile
+    playerLoot.push(playerDraw[0]);
+    comLoot.push(comDraw[0]);
+    playerDraw.shift();
+    comDraw.shift();
+
+    //If either deck is empty, shuffle the trophy pile into it. If there is a tie and one player is unable to play another card, then a stalemate is declared.
+    if (playerDeck.length == 0){
+      if (playerTrophy.length != 0){
+        playerDeck = shuffle(playerTrophy);
+      } else {
+        $('.outcome').html("Stalemate!");
+        return 'stalemate';
+      }
+    };
+    if (comDeck.length == 0){
+      if (comTrophy.length != 0){
+        comDeck = shuffle(comTrophy);
+      } else {
+        $('.outcome').html("Stalemate!");
+        return 'stalemate';
+      }
+    };
+
+    //If at least four cards can be drawn, three cards are moved from the deck to the loot pile
+    if (playerDeck.length > 4 && comDeck.length > 4){
+
+      for (i=0; i < 3; i++) {
+        playerLoot.push(playerDeck[i]);
+        comLoot.push(comDeck[i]);
+      };
+
+      playerDeck.splice(0, 3);
+      comDeck.splice(0, 3);
+
+      return
+    };
+
+    //if either deck has one card, no cards are moved to the loot pile
+    if (playerDeck.length == 1 || comDeck.length == 1){
+      return
+    };
+
+    //if either deck has two cards, one card is moved to loot pile
+    if (playerDeck.length == 2 || comDeck.length == 2){
+      playerLoot.push(playerDeck[0]);
+      comLoot.push(comDeck[0]);
+
+      playerDeck.shift();
+      comDeck.shift();
+
+      return;
+    };
+
+    //if either deck has three cards, two cards are moved to the loot pile
+    if (playerDeck.length == 3 || comDeck.length == 3){
+
+      for (i=0; i < 2; i++) {
+        playerLoot.push(playerDeck[i]);
+        comLoot.push(comDeck[i]);
+      };
+
+      playerDeck.splice(0, 2);
+      comDeck.splice(0, 2);
+
+      return
+    };
 
   };
 
