@@ -13,6 +13,17 @@ body {
   display: none;
 }
 
+.outcome{
+  height: 100vh;
+  width: 100vw;
+  font-size: 5rem;
+  color: gold;
+  position: absolute;
+  text-align: center;
+  top: 10rem;
+  z-index: 2;
+}
+
 .header {
  width: 100%;
  height: 5rem;
@@ -20,6 +31,24 @@ body {
  position: fixed;
  background: linear-gradient(red, darkred);
  z-index: 3;
+}
+
+table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 1.5rem;
+  color: white;
+}
+
+table, td {
+  border-left: .2rem solid white;
+  border-right: .2rem solid white;
+}
+
+td {
+  width: 25%;
 }
 
 .container {

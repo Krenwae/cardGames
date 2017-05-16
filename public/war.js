@@ -133,7 +133,7 @@ $(function(){
 
     if (busy) {
       var win2 = toTrophy(winner);
-      reshuffle(win2);
+      reshuffle(winner);
     } else {
       return
     };
@@ -144,7 +144,11 @@ $(function(){
     console.log(comDraw);
     console.log(comDeck);
 
-    setTimeout(function(){busy = 0;}, 1000);
+    setTimeout(function(){
+      busy = 0;
+      $('.pScore').html(playerDeck.length + playerTrophy.length);
+      $('.cScore').html(comDeck.length + comTrophy.length);
+    }, 1000);
   };
 
   //this function compares two drawn cards
@@ -154,7 +158,75 @@ $(function(){
     if (card1 == card2) {
 
       //if Cards are of equal value, a 'war' occurs. Three(or as many as possible) cards are drawn into a 'loot' pile...
-      var tie = tie();
+      var tie = function() {
+        //the drawn cards are moved into the loot pile
+        playerLoot.push(playerDraw[0]);
+        comLoot.push(comDraw[0]);
+        playerDraw.shift();
+        comDraw.shift();
+
+        //If either deck is empty, shuffle the trophy pile into it. If there is a tie and one player is unable to play another card, then a stalemate is declared.
+        if (playerDeck.length == 0){
+          if (playerTrophy.length != 0){
+            playerDeck = shuffle(playerTrophy);
+          } else {
+            $('.outcome').html("Stalemate!");
+            return 'stalemate';
+          }
+        };
+        if (comDeck.length == 0){
+          if (comTrophy.length != 0){
+            comDeck = shuffle(comTrophy);
+          } else {
+            $('.outcome').html("Stalemate!");
+            return 'stalemate';
+          }
+        };
+
+        //If at least four cards can be drawn, three cards are moved from the deck to the loot pile
+        if (playerDeck.length > 4 && comDeck.length > 4){
+
+          for (i=0; i < 3; i++) {
+            playerLoot.push(playerDeck[i]);
+            comLoot.push(comDeck[i]);
+          };
+
+          playerDeck.splice(0, 3);
+          comDeck.splice(0, 3);
+
+          return
+        };
+
+        //if either deck has one card, no cards are moved to the loot pile
+        if (playerDeck.length == 1 || comDeck.length == 1){
+          return
+        };
+
+        //if either deck has two cards, one card is moved to loot pile
+        if (playerDeck.length == 2 || comDeck.length == 2){
+          playerLoot.push(playerDeck[0]);
+          comLoot.push(comDeck[0]);
+
+          playerDeck.shift();
+          comDeck.shift();
+
+          return;
+        };
+
+        //if either deck has three cards, two cards are moved to the loot pile
+        if (playerDeck.length == 3 || comDeck.length == 3){
+
+          for (i=0; i < 2; i++) {
+            playerLoot.push(playerDeck[i]);
+            comLoot.push(comDeck[i]);
+          };
+
+          playerDeck.splice(0, 2);
+          comDeck.splice(0, 2);
+
+          return
+        };
+    };
       if(tie == 'stalemate'){return};
 
       busy = 0;
@@ -188,90 +260,23 @@ $(function(){
 
   };
 
-  //special rules occur if there is a tie
-  function tie() {
-
-    //the drawn cards are moved into the loot pile
-    playerLoot.push(playerDraw[0]);
-    comLoot.push(comDraw[0]);
-    playerDraw.shift();
-    comDraw.shift();
-
-    //If either deck is empty, shuffle the trophy pile into it. If there is a tie and one player is unable to play another card, then a stalemate is declared.
-    if (playerDeck.length == 0){
-      if (playerTrophy.length != 0){
-        playerDeck = shuffle(playerTrophy);
-      } else {
-        $('.outcome').html("Stalemate!");
-        return 'stalemate';
-      }
-    };
-    if (comDeck.length == 0){
-      if (comTrophy.length != 0){
-        comDeck = shuffle(comTrophy);
-      } else {
-        $('.outcome').html("Stalemate!");
-        return 'stalemate';
-      }
-    };
-
-    //If at least four cards can be drawn, three cards are moved from the deck to the loot pile
-    if (playerDeck.length > 4 && comDeck.length > 4){
-
-      for (i=0; i < 3; i++) {
-        playerLoot.push(playerDeck[i]);
-        comLoot.push(comDeck[i]);
-      };
-
-      playerDeck.splice(0, 3);
-      comDeck.splice(0, 3);
-
-      return
-    };
-
-    //if either deck has one card, no cards are moved to the loot pile
-    if (playerDeck.length == 1 || comDeck.length == 1){
-      return
-    };
-
-    //if either deck has two cards, one card is moved to loot pile
-    if (playerDeck.length == 2 || comDeck.length == 2){
-      playerLoot.push(playerDeck[0]);
-      comLoot.push(comDeck[0]);
-
-      playerDeck.shift();
-      comDeck.shift();
-
-      return;
-    };
-
-    //if either deck has three cards, two cards are moved to the loot pile
-    if (playerDeck.length == 3 || comDeck.length == 3){
-
-      for (i=0; i < 2; i++) {
-        playerLoot.push(playerDeck[i]);
-        comLoot.push(comDeck[i]);
-      };
-
-      playerDeck.splice(0, 2);
-      comDeck.splice(0, 2);
-
-      return
-    };
-
-  };
-
   //Once a winner is defined, all cards in the loot and draw piles are moved to the winner's trophy pile
   function toTrophy(input) {
 
     //If player wins:
     if (input) {
+      if (playerTrophy.length == 0){
+        var trophy = 1;
+      }
       playerTrophy.push(playerDraw[0], comDraw[0]);
       playerDraw.shift();
       comDraw.shift();
 
       $('.pDraw').toggleClass('flip toMyTrophy');
       $('.cDraw').toggleClass('flip toTheirTrophy');
+      if (trophy) {
+        $('.pTrophy').toggleClass('none');
+      };
 
       playerLoot.forEach(function(element){
         playerTrophy.push(element);
@@ -283,16 +288,21 @@ $(function(){
         comLoot.splice(element, 1);
       });
 
-      return 1;
     } else {
 
       //if com wins:
+      if (comTrophy.length == 0){
+        var trophy = 1;
+      }
       comTrophy.push(playerDraw[0], comDraw[0]);
       playerDraw.shift();
       comDraw.shift();
 
       $('.cDraw').toggleClass('flip toMyTrophy');
       $('.pDraw').toggleClass('flip toTheirTrophy');
+      if (trophy) {
+        $('.cTrophy').toggleClass('none');
+      };
 
       playerLoot.forEach(function(element){
         comTrophy.push(element);
@@ -304,13 +314,20 @@ $(function(){
         comLoot.splice(element, 1);
       });
 
-      return 0;
     };
 
+    if (playerDeck.length == 0) {
+      $('.pDeck').toggleClass('none');
+    };
+    if (comDeck.length == 0) {
+      $('.cDeck').toggleClass('none');
+    };
     console.log("wtf?");
   };
 
   function reshuffle(input) {
+
+    console.log("it's working");
 
     if(input){
       setTimeout(function(){

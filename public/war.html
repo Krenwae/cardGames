@@ -12,8 +12,22 @@
   </head>
 
   <body>
+    <h1 class="outcome"></h1>
     <div class="header">
-      <h1 class="outcome"></h1>
+      <table>
+        <tr>
+          <td>Player Deck</td>
+          <td>Player Trophy</td>
+          <td>Computer Deck</td>
+          <td>Computer Trophy</td>
+        </tr>
+        <tr>
+          <td class="pScoreDeck">26</td>
+          <td class="pScoreTrophy">0</td>
+          <td class="cScoreDeck">26</td>
+          <td class="cScoreTrophy">0</td>
+        </tr>
+      </table>
     </div>
     <div class="container">
       <div class="board">
@@ -27,7 +41,7 @@
             <div class="cBR BR"></div>
             <div class="cCardNum cardNum"></div>
           </div>
-          <div class="cTrophy trophy cPile">
+          <div class="cTrophy trophy cPile none">
           </div>
         </div>
         <div class="player playSpace">
@@ -40,7 +54,7 @@
             <div class="pBR BR"></div>
             <div class="pCardNum cardNum"></div>
           </div>
-          <div class="pTrophy trophy pPile">
+          <div class="pTrophy trophy pPile none">
           </div>
         </div>
       </div>
