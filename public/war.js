@@ -133,8 +133,7 @@ $(function(){
 
     if (busy) {
       var win2 = toTrophy(winner);
-      setTimeout(reshuffle(win2), 2000);
-      busy = 0;
+      reshuffle(win2);
     } else {
       return
     };
@@ -145,6 +144,7 @@ $(function(){
     console.log(comDraw);
     console.log(comDeck);
 
+    setTimeout(function(){busy = 0;}, 1000);
   };
 
   //this function compares two drawn cards
