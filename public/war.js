@@ -105,9 +105,6 @@ $(function(){
     playerDeck.shift();
     comDeck.shift();
 
-
-    console.log(pic[playerDraw[0].suit]);
-    console.log(center[playerDraw[0].num]);
     //An animation makes it look like the cards are being drawn
     $('.pTL').html(pic[playerDraw[0].suit]);
     $('.pTR').html(pic[playerDraw[0].suit]);
@@ -121,17 +118,12 @@ $(function(){
     $('.cBR').html(pic[comDraw[0].suit]);
     $('.cCardNum').html(center[comDraw[0].num]);
 
-    $('.pDraw').toggleClass('pflip');
-    $('.cDraw').toggleClass('cflip');
+    $('.pDraw').toggleClass('flip');
+    $('.cDraw').toggleClass('flip');
 
 
     //declare winner as player(true) or com(false)
     winner = compare(playerDraw[0].num, comDraw[0].num);
-
-    console.log(playerDraw[0].num);
-    console.log(winner);
-    console.log(playerDeck.length);
-
   };
 
   //move cards to trophy pile depending on winner
@@ -140,8 +132,8 @@ $(function(){
   function collection() {
 
     if (busy) {
-      toTrophy(winner);
-      reshuffle();
+      var win2 = toTrophy(winner);
+      setTimeout(reshuffle(win2), 2000);
       busy = 0;
     } else {
       return
@@ -278,8 +270,8 @@ $(function(){
       playerDraw.shift();
       comDraw.shift();
 
-      $('.pDraw').toggleClass('pflip');
-      $('.cDraw').toggleClass('cflip');
+      $('.pDraw').toggleClass('flip toMyTrophy');
+      $('.cDraw').toggleClass('flip toTheirTrophy');
 
       playerLoot.forEach(function(element){
         playerTrophy.push(element);
@@ -290,6 +282,8 @@ $(function(){
         playerTrophy.push(element);
         comLoot.splice(element, 1);
       });
+
+      return 1;
     } else {
 
       //if com wins:
@@ -297,6 +291,9 @@ $(function(){
       playerDraw.shift();
       comDraw.shift();
 
+      $('.cDraw').toggleClass('flip toMyTrophy');
+      $('.pDraw').toggleClass('flip toTheirTrophy');
+
       playerLoot.forEach(function(element){
         comTrophy.push(element);
         playerLoot.splice(element, 1);
@@ -306,13 +303,26 @@ $(function(){
         comTrophy.push(element);
         comLoot.splice(element, 1);
       });
-    }
 
-    console.log(playerTrophy.length);
-    console.log(comTrophy.length);
+      return 0;
+    };
+
+    console.log("wtf?");
   };
 
-  function reshuffle() {
+  function reshuffle(input) {
+
+    if(input){
+      setTimeout(function(){
+        $('.pDraw').toggleClass('toMyTrophy');
+        $('.cDraw').toggleClass('toTheirTrophy');
+      }, 600);
+    } else {
+      setTimeout(function(){
+        $('.cDraw').toggleClass('toMyTrophy');
+        $('.pDraw').toggleClass('toTheirTrophy');
+      }, 600);
+    };
 
     if (playerDeck == 0) {
       if (playerTrophy != 0){
