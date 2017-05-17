@@ -1,6 +1,8 @@
 //this is the JS code for the game war
 $(function(){
 
+  //player, or p, denotes the human player
+  //com, or c, denotes the computer opponenet
   //Some variable that are needed:
   var busy = 0;
   var winner = 0;
@@ -15,11 +17,11 @@ $(function(){
   //the game uses a 52 card deck...
   var deck = buildDeck(empty);
   //...which is newPiled...
-  var shuffled = shuffle(deck);
+  // var shuffled = shuffle(deck);
   //...and dealt evenly to two players (26 cards each)
   var playerDeck = [];
   var comDeck = [];
-  deal(shuffled, playerDeck, comDeck);
+  deal(deck, comDeck, playerDeck);
   //The players draw and compare cards...
   var playerDraw = [];
   var comDraw = [];
@@ -75,9 +77,9 @@ $(function(){
     var half = source.length/2;
 
     //half of the cards go to player1
-    for(i=0; source.length != half; i++){
-      player1.push(source[i]);
-      source.splice(i, 1);
+    for(i=0; i < 26; i++){
+      player1.push(source[0]);
+      source.splice(0, 1);
     };
 
     //and the rest go to player2
@@ -88,15 +90,16 @@ $(function(){
 
   //This function runs the comparison feature of the game. When a button is pushed, the cards are drawn, then their values are compared, then the winner is decided. At a tie, a do-over round is completed. Then, if either player has no deck, their trophy pile is shuffled into a new one. If they have no trophy pile, they loose.
   $('.drawButton').on('click', draw );
+  $('.pDeck').on('click', draw);
 
   function draw() {
-
-    //the busy var prevents the function from running while it is running
-    if (busy) {
+  //  console.log("draw");
+    //the busy var prevents draw or collect from running at the same time, or running multiples of either
+    if (busy != 0) {
       return;
     };
-    busy = true;
-    console.log(busy);
+    busy = 1;
+  //  console.log(busy);
 
 
     //The top cards are moved from the deck to the draw pile
@@ -105,7 +108,15 @@ $(function(){
     playerDeck.shift();
     comDeck.shift();
 
-    //An animation makes it look like the cards are being drawn
+    //if either deck is empty, display them as empty
+    if (playerDeck.length == 0) {
+      $('.pDeck').addClass('none');
+    };
+    if (comDeck.length == 0) {
+      $('.cDeck').addClass('none');
+    };
+
+    //An animation makes it look like the cards are being drawn. It also puts the suit in the corners and the value in the center
     $('.pTL').html(pic[playerDraw[0].suit]);
     $('.pTR').html(pic[playerDraw[0].suit]);
     $('.pBL').html(pic[playerDraw[0].suit]);
@@ -118,8 +129,13 @@ $(function(){
     $('.cBR').html(pic[comDraw[0].suit]);
     $('.cCardNum').html(center[comDraw[0].num]);
 
-    $('.pDraw').toggleClass('flip');
-    $('.cDraw').toggleClass('flip');
+    $('.pDraw').addClass('flip');
+    $('.cDraw').addClass('flip');
+
+    //busy is then changed to allow Collect to work, but not Draw
+    setTimeout(function () {
+      busy = 2;
+    }, 500);
 
 
     //declare winner as player(true) or com(false)
@@ -128,111 +144,127 @@ $(function(){
 
   //move cards to trophy pile depending on winner
   $('.collectButton').on('click', collection);
+  $('.pDraw').on('click', collection);
 
   function collection() {
 
-    if (busy) {
-      var win2 = toTrophy(winner);
+    //Busy is checked to make sure that draw has run and nothing else is currently running
+    if (busy == 2) {
+
+      //busy is changed to prevent anything else from running
+      busy = 3;
+
+      //the winner from the draw function is passed into the toTrophy function, which changes the score and animates the drawn card into the trophy pile
+      toTrophy(winner);
+
+      //reshuffle does all the upkeep, including moving the drawn card back to the deck and reshuffling decks if they are empty(and are capable of being reshuffled)
       reshuffle(winner);
     } else {
       return
     };
 
-    console.log(playerDraw);
-    console.log(playerDeck);
-
-    console.log(comDraw);
-    console.log(comDeck);
-
+    //busy is then changed after .8s to allow time for the animations to run
     setTimeout(function(){
       busy = 0;
-      $('.pScore').html(playerDeck.length + playerTrophy.length);
-      $('.cScore').html(comDeck.length + comTrophy.length);
-    }, 1000);
+      console.log("busy is" + busy);
+    }, 800);
   };
 
-  //this function compares two drawn cards
+  //this function compares two drawn cards. If player wins, return true. if com wins, return false.
   function compare(card1, card2) {
 
-    //If player wins, return true. if com wins, return false.
+    //if Cards are of equal value, a 'war' occurs. Three(or as many as possible) cards are drawn into a 'loot' pile...
     if (card1 == card2) {
 
-      //if Cards are of equal value, a 'war' occurs. Three(or as many as possible) cards are drawn into a 'loot' pile...
-      var tie = function() {
-        //the drawn cards are moved into the loot pile
-        playerLoot.push(playerDraw[0]);
-        comLoot.push(comDraw[0]);
-        playerDraw.shift();
-        comDraw.shift();
+      //The word "War!" flashes on the screen for two seconds
+      $('.outcome').html('War!');
+      setTimeout(function(){
+        console.log("War!")
+        $('.outcome').html('');
+      }, 500);
 
-        //If either deck is empty, shuffle the trophy pile into it. If there is a tie and one player is unable to play another card, then a stalemate is declared.
-        if (playerDeck.length == 0){
-          if (playerTrophy.length != 0){
-            playerDeck = shuffle(playerTrophy);
-          } else {
-            $('.outcome').html("Stalemate!");
-            return 'stalemate';
-          }
-        };
-        if (comDeck.length == 0){
-          if (comTrophy.length != 0){
-            comDeck = shuffle(comTrophy);
-          } else {
-            $('.outcome').html("Stalemate!");
-            return 'stalemate';
-          }
-        };
+      //the drawn cards are moved into the loot pile
+      playerLoot.push(playerDraw[0]);
+      comLoot.push(comDraw[0]);
+      playerDraw.shift();
+      comDraw.shift();
 
-        //If at least four cards can be drawn, three cards are moved from the deck to the loot pile
-        if (playerDeck.length > 4 && comDeck.length > 4){
+      $('.draw').addClass('toLoot');
 
-          for (i=0; i < 3; i++) {
-            playerLoot.push(playerDeck[i]);
-            comLoot.push(comDeck[i]);
-          };
-
-          playerDeck.splice(0, 3);
-          comDeck.splice(0, 3);
-
-          return
-        };
-
-        //if either deck has one card, no cards are moved to the loot pile
-        if (playerDeck.length == 1 || comDeck.length == 1){
-          return
-        };
-
-        //if either deck has two cards, one card is moved to loot pile
-        if (playerDeck.length == 2 || comDeck.length == 2){
-          playerLoot.push(playerDeck[0]);
-          comLoot.push(comDeck[0]);
-
-          playerDeck.shift();
-          comDeck.shift();
-
+      //If either deck is empty, shuffle the trophy pile into it. If there is a tie and one player is unable to play another card, then a stalemate is declared.
+      if (playerDeck.length == 0){
+        if (playerTrophy.length != 0){
+          playerDeck = shuffle(playerTrophy);
+        } else {
+          $('.outcome').html("Stalemate!");
           return;
+        }
+      };
+      if (comDeck.length == 0){
+        if (comTrophy.length != 0){
+          comDeck = shuffle(comTrophy);
+        } else {
+          $('.outcome').html("Stalemate!");
+          return;
+        }
+      };
+
+      //If at least four cards can be drawn, three cards are moved from the deck to the loot pile
+      if (playerDeck.length > 4 && comDeck.length > 4){
+
+        for (i=1; i < 4; i++) {
+          playerLoot.push(playerDeck[i]);
+          comLoot.push(comDeck[i]);
+
+          $('.tie'+i).removeClass('none');
+          $('.tie'+i).addClass('toLoot'+i);
         };
 
-        //if either deck has three cards, two cards are moved to the loot pile
-        if (playerDeck.length == 3 || comDeck.length == 3){
+        playerDeck.splice(0, 3);
+        comDeck.splice(0, 3);
 
-          for (i=0; i < 2; i++) {
-            playerLoot.push(playerDeck[i]);
-            comLoot.push(comDeck[i]);
-          };
+        busy = 0;
+        return
+      };
 
-          playerDeck.splice(0, 2);
-          comDeck.splice(0, 2);
+      //if either deck has one card, no cards are moved to the loot pile
+      if (playerDeck.length == 1 || comDeck.length == 1){
+        busy = 0;
+        return
+      };
 
-          return
+      //if either deck has two cards, one card is moved to loot pile
+      if (playerDeck.length == 2 || comDeck.length == 2){
+        playerLoot.push(playerDeck[0]);
+        comLoot.push(comDeck[0]);
+
+        $('.tie').removeClass('none');
+        $('.tie1').addClass('toLoot1');
+
+        playerDeck.shift();
+        comDeck.shift();
+
+        busy = 0;
+        return;
+      };
+
+      //if either deck has three cards, two cards are moved to the loot pile
+      if (playerDeck.length == 3 || comDeck.length == 3){
+
+        for (i=1; i < 3; i++) {
+          playerLoot.push(playerDeck[i]);
+          comLoot.push(comDeck[i]);
+
+          $('.tie'+i).removeClass('none');
+          $('.tie'+i).addClass('toLoot'+i);
         };
-    };
-      if(tie == 'stalemate'){return};
 
-      busy = 0;
+        playerDeck.splice(0, 2);
+        comDeck.splice(0, 2);
 
-      //..then a new card is drawn for each player
-      draw();
+        busy = 0;
+        return;
+      };
 
     } else if (card1 == 1) {
 
@@ -272,10 +304,10 @@ $(function(){
       playerDraw.shift();
       comDraw.shift();
 
-      $('.pDraw').toggleClass('flip toMyTrophy');
-      $('.cDraw').toggleClass('flip toTheirTrophy');
+      $('.pDraw').removeClass('flip').addClass('toMyTrophy');
+      $('.cDraw').removeClass('flip').addClass('toTheirTrophy');
       if (trophy) {
-        $('.pTrophy').toggleClass('none');
+        $('.pTrophy').removeClass('none');
       };
 
       playerLoot.forEach(function(element){
@@ -298,10 +330,10 @@ $(function(){
       playerDraw.shift();
       comDraw.shift();
 
-      $('.cDraw').toggleClass('flip toMyTrophy');
-      $('.pDraw').toggleClass('flip toTheirTrophy');
+      $('.cDraw').removeClass('flip').addClass('toMyTrophy');
+      $('.pDraw').removeClass('flip').addClass('toTheirTrophy');
       if (trophy) {
-        $('.cTrophy').toggleClass('none');
+        $('.cTrophy').removeClass('none');
       };
 
       playerLoot.forEach(function(element){
@@ -316,46 +348,50 @@ $(function(){
 
     };
 
-    if (playerDeck.length == 0) {
-      $('.pDeck').toggleClass('none');
-    };
-    if (comDeck.length == 0) {
-      $('.cDeck').toggleClass('none');
-    };
-    console.log("wtf?");
+    $('.pScoreDeck').html(playerDeck.length);
+    $('.pScoreTrophy').html(playerTrophy.length);
+    $('.cScoreDeck').html(comDeck.length);
+    $('.cScoreTrophy').html(comTrophy.length);
   };
 
   function reshuffle(input) {
 
-    console.log("it's working");
+    if (playerDeck.length == 0) {
+      if (playerTrophy.length) {
+        $('.pDeck').removeClass('none');
+        $('.pTrophy').addClass('none');
+        playerDeck = shuffle(playerTrophy);
+      } else {
+        $('.outcome').html('You lose :(')
+      };
+    };
+
+    if (comDeck.length == 0) {
+      if (comTrophy.length) {
+        $('.cDeck').removeClass('none');
+        $('.cTrophy').addClass('none');
+        comDeck = shuffle(comTrophy);
+      } else {
+        $('.outcome').html('You win :)')
+      };
+    };
 
     if(input){
       setTimeout(function(){
-        $('.pDraw').toggleClass('toMyTrophy');
-        $('.cDraw').toggleClass('toTheirTrophy');
+        $('.pDraw').removeClass('toMyTrophy');
+        $('.cDraw').removeClass('toTheirTrophy');
       }, 600);
     } else {
       setTimeout(function(){
-        $('.cDraw').toggleClass('toMyTrophy');
-        $('.pDraw').toggleClass('toTheirTrophy');
+        $('.cDraw').removeClass('toMyTrophy');
+        $('.pDraw').removeClass('toTheirTrophy');
       }, 600);
     };
 
-    if (playerDeck == 0) {
-      if (playerTrophy != 0){
-        playerDeck = shuffle(playerTrophy)
-      } else {
-        $('.outcome').html("You lose :(");
-      }
-    };
-
-    if (comDeck == 0) {
-      if (comTrophy != 0){
-        comDeck = shuffle(comTrophy)
-      } else {
-        $('.outcome').html("You win :)");
-      }
-    };
+    $('.pScoreDeck').html(playerDeck.length);
+    $('.pScoreTrophy').html(playerTrophy.length);
+    $('.cScoreDeck').html(comDeck.length);
+    $('.cScoreTrophy').html(comTrophy.length);
   };
 
 })

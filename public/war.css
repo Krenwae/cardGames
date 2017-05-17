@@ -21,7 +21,7 @@ body {
   position: absolute;
   text-align: center;
   top: 10rem;
-  z-index: 2;
+  z-index: 3;
 }
 
 .header {
@@ -43,8 +43,8 @@ table {
 }
 
 table, td {
-  border-left: .2rem solid white;
-  border-right: .2rem solid white;
+  border-left: .3rem groove lightgrey;
+  border-right: .3rem groove lightgrey;
 }
 
 td {
@@ -61,7 +61,7 @@ td {
 }
 
 .board {
-  position: relative;
+  position: absolute;
   top: -5rem;
   height: 50rem;
   width: 70rem;
@@ -76,6 +76,7 @@ td {
 
 .playSpace {
   width: 50rem;
+  position: relative;
 }
 
 .cPile {
@@ -105,9 +106,35 @@ td {
 }
 
 .deck {
-  position: relative;
+  position: absolute;
   top: 8rem;
   left: 21.5rem;
+}
+
+.tie {
+  position: absolute;
+  top: 8rem;
+  left: 21.5rem;
+  transition: top .3s linear, left .3s linear;
+  z-index: 3;
+}
+
+.toLoot1 {
+  top: 0rem;
+  left: 6rem;
+  z-index: 4;
+}
+
+.toLoot2 {
+  top: 0rem;
+  left: 7rem;
+  z-index: 5;
+}
+
+.toLoot3 {
+  top: 0rem;
+  left: 8rem;
+  z-index: 6;
 }
 
 .pDraw {
@@ -122,32 +149,37 @@ td {
   margin: 1rem;
   height: 7rem;
   width: 5rem;
-  position: relative;
-  top: 0rem;
+  position: absolute;
+  top: 8rem;
   left: 21.5rem;
   background-color: white;
   font-size: 0.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: top .5s linear, transform .5s linear, left .5s linear;
+  transition: top .3s linear, transform .3s linear, left .3s linear;
 }
 
 .flip {
-  top: -8rem;
+  top: 0rem;
   transform: rotateX(0deg);
 }
 
 .toMyTrophy {
-  top: -5rem;
+  top: 7rem;
   left: 35rem;
   transform: rotateY(90deg) rotateX(90deg);
 }
 
 .toTheirTrophy {
-  top: -20.5rem;
+  top: -16rem;
   left: 8rem;
   transform: rotateY(90deg) rotateX(90deg);
+}
+
+.toLoot {
+  top: 0rem;
+  left: 5rem;
 }
 
 .TL {
@@ -311,9 +343,9 @@ td {
 }
 
 .trophy {
-  position: relative;
+  position: absolute;
   left: 35rem;
-  top: -13rem;
+  top: 7rem;
   transform: rotate(90deg);
 }
 

@@ -1,11 +1,13 @@
 <!doctype html>
 <html lang="en">
 
+  <!--This is the html for the card game war. Player, or p, denotes the human player. Computer, or c, denotes computer opponent-->
+
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Card Games</title>
+    <title>Card Games: War!</title>
     <link rel="stylesheet" href="war.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="war.js"></script>
@@ -34,6 +36,11 @@
         <div class="com playSpace">
           <div class="cDeck deck cPile">
           </div>
+          <div class="cLoot loot none">
+            <div class="tie tie1 cPile none"></div>
+            <div class="tie tie2 cPile none"></div>
+            <div class="tie tie3 cPile none"></div>
+          </div>
           <div class="cDraw draw">
             <div class="cTL TL"></div>
             <div class="cTR TR"></div>
@@ -46,6 +53,11 @@
         </div>
         <div class="player playSpace">
           <div class="pDeck deck pPile">
+          </div>
+          <div class="cLoot loot none">
+            <div class="tie tie1 pPile none"></div>
+            <div class="tie tie2 pPile none"></div>
+            <div class="tie tie3 pPile none"></div>
           </div>
           <div class="pDraw draw">
             <div class="pTL TL"></div>
