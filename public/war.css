@@ -14,8 +14,8 @@ body {
 }
 
 .outcome{
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   font-size: 5rem;
   color: gold;
   position: absolute;
@@ -61,8 +61,8 @@ td {
 }
 
 .board {
-  position: absolute;
-  top: -5rem;
+  position: fixed;
+  top: -7rem;
   height: 50rem;
   width: 70rem;
   background: repeating-radial-gradient(darkgreen, green 50%, black 100%);

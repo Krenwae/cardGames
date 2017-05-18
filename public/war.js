@@ -5,6 +5,7 @@ $(function(){
   //com, or c, denotes the computer opponenet
   //Some variable that are needed:
   var busy = 0;
+  var tie = 1;
   var winner = 0;
   var empty = [];
   var Spades = '<div class="spadeMiddle"></div><div class="spadeLeft"></div><div class="spadeRight"></div><div class="spadeBottom">';
@@ -17,11 +18,11 @@ $(function(){
   //the game uses a 52 card deck...
   var deck = buildDeck(empty);
   //...which is newPiled...
-  // var shuffled = shuffle(deck);
+  var shuffled = shuffle(deck);
   //...and dealt evenly to two players (26 cards each)
   var playerDeck = [];
   var comDeck = [];
-  deal(deck, comDeck, playerDeck);
+  deal(shuffled, comDeck, playerDeck);
   //The players draw and compare cards...
   var playerDraw = [];
   var comDraw = [];
@@ -176,12 +177,8 @@ $(function(){
     //if Cards are of equal value, a 'war' occurs. Three(or as many as possible) cards are drawn into a 'loot' pile...
     if (card1 == card2) {
 
-      //The word "War!" flashes on the screen for two seconds
-      $('.outcome').html('War!');
-      setTimeout(function(){
-        console.log("War!")
-        $('.outcome').html('');
-      }, 500);
+      //The word "War!" flashes on the screen
+      $('.outcome').removeClass('none').html('War!');
 
       //the drawn cards are moved into the loot pile
       playerLoot.push(playerDraw[0]);
@@ -189,7 +186,7 @@ $(function(){
       playerDraw.shift();
       comDraw.shift();
 
-      $('.draw').addClass('toLoot');
+      $('.draw').addClass('toLoot1');
 
       //If either deck is empty, shuffle the trophy pile into it. If there is a tie and one player is unable to play another card, then a stalemate is declared.
       if (playerDeck.length == 0){
@@ -209,28 +206,22 @@ $(function(){
         }
       };
 
+      $('.tie').removeClass('none');
+
+      setTimeout(function(){
+
       //If at least four cards can be drawn, three cards are moved from the deck to the loot pile
       if (playerDeck.length > 4 && comDeck.length > 4){
-
         for (i=1; i < 4; i++) {
           playerLoot.push(playerDeck[i]);
           comLoot.push(comDeck[i]);
 
-          $('.tie'+i).removeClass('none');
           $('.tie'+i).addClass('toLoot'+i);
         };
 
         playerDeck.splice(0, 3);
         comDeck.splice(0, 3);
-
-        busy = 0;
-        return
-      };
-
-      //if either deck has one card, no cards are moved to the loot pile
-      if (playerDeck.length == 1 || comDeck.length == 1){
-        busy = 0;
-        return
+        tie = 4;
       };
 
       //if either deck has two cards, one card is moved to loot pile
@@ -238,33 +229,37 @@ $(function(){
         playerLoot.push(playerDeck[0]);
         comLoot.push(comDeck[0]);
 
-        $('.tie').removeClass('none');
         $('.tie1').addClass('toLoot1');
+        $('.tie2').addClass('none');
+        $('.tie3').addClass('none');
 
         playerDeck.shift();
         comDeck.shift();
-
-        busy = 0;
-        return;
+        tie = 2;
       };
 
       //if either deck has three cards, two cards are moved to the loot pile
       if (playerDeck.length == 3 || comDeck.length == 3){
-
         for (i=1; i < 3; i++) {
           playerLoot.push(playerDeck[i]);
           comLoot.push(comDeck[i]);
 
-          $('.tie'+i).removeClass('none');
           $('.tie'+i).addClass('toLoot'+i);
         };
 
+        $('.tie3').addClass('none');
+
         playerDeck.splice(0, 2);
         comDeck.splice(0, 2);
-
-        busy = 0;
-        return;
+        tie = 3;
       };
+
+      $('.outcome').html('').addClass('none');
+
+      busy = 0;
+      $('.draw').removeClass('flip toLoot1');
+      return;
+    }, 1000);
 
     } else if (card1 == 1) {
 
@@ -310,6 +305,11 @@ $(function(){
         $('.pTrophy').removeClass('none');
       };
 
+      for (i=1; i != tie; i++){
+        $('.pLoot.tie'+i).removeClass('toLoot'+i).addClass('toMyTrophy');
+        $('.cLoot.tie'+i).removeClass('toLoot'+i).addClass('toTheirTrophy');
+      };
+
       playerLoot.forEach(function(element){
         playerTrophy.push(element);
         playerLoot.splice(element, 1);
@@ -334,6 +334,11 @@ $(function(){
       $('.pDraw').removeClass('flip').addClass('toTheirTrophy');
       if (trophy) {
         $('.cTrophy').removeClass('none');
+      };
+
+      for (i=1; i != tie; i++){
+        $('.cLoot.tie'+i).removeClass('toLoot'+i).addClass('toMyTrophy');
+        $('.pLoot.tie'+i).removeClass('toLoot'+i).addClass('toTheirTrophy');
       };
 
       playerLoot.forEach(function(element){
@@ -380,11 +385,23 @@ $(function(){
       setTimeout(function(){
         $('.pDraw').removeClass('toMyTrophy');
         $('.cDraw').removeClass('toTheirTrophy');
+        $('.tie').addClass('none');
+
+        for (i=1; i != tie; i++){
+          $('.pLoot.tie'+i).removeClass('toMyTrophy');
+          $('.cLoot.tie'+i).removeClass('toTheirTrophy');
+        };
       }, 600);
     } else {
       setTimeout(function(){
         $('.cDraw').removeClass('toMyTrophy');
         $('.pDraw').removeClass('toTheirTrophy');
+        $('.tie').addClass('none');
+
+        for (i=1; i != tie; i++){
+          $('.cLoot.tie'+i).removeClass('toMyTrophy');
+          $('.pLoot.tie'+i).removeClass('toTheirTrophy');
+        };
       }, 600);
     };
 

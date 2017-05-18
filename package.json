@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Krenwae/cardGames/issues"
   },
-  "homepage": "https://github.com/Krenwae/cardGames#readme"
+  "homepage": "https://github.com/Krenwae/cardGames#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.11",
+    "gulp-nodemon": "^2.2.1"
+  }
 }
