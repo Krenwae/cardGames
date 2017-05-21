@@ -115,26 +115,8 @@ td {
   position: absolute;
   top: 8rem;
   left: 21.5rem;
-  transition: top .3s linear, left .3s linear;
+  transition: top .3s linear, left .3s linear, transform .3s linear;
   z-index: 3;
-}
-
-.toLoot1 {
-  top: 0rem;
-  left: 6rem;
-  z-index: 4;
-}
-
-.toLoot2 {
-  top: 0rem;
-  left: 7rem;
-  z-index: 5;
-}
-
-.toLoot3 {
-  top: 0rem;
-  left: 8rem;
-  z-index: 6;
 }
 
 .pDraw {
@@ -163,6 +145,24 @@ td {
 .flip {
   top: 0rem;
   transform: rotateX(0deg);
+}
+
+.toLoot1 {
+  top: 0rem;
+  left: 6rem;
+  z-index: 4;
+}
+
+.toLoot2 {
+  top: 0rem;
+  left: 7rem;
+  z-index: 5;
+}
+
+.toLoot3 {
+  top: 0rem;
+  left: 8rem;
+  z-index: 6;
 }
 
 .toMyTrophy {

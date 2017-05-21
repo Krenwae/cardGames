@@ -89,6 +89,14 @@ $(function(){
     });
   };
 
+  //this function displays the current score
+  function scoreBoard() {
+    $('.pScoreDeck').html(playerDeck.length);
+    $('.pScoreTrophy').html(playerTrophy.length);
+    $('.cScoreDeck').html(comDeck.length);
+    $('.cScoreTrophy').html(comTrophy.length);
+  }
+
   //This function runs the comparison feature of the game. When a button is pushed, the cards are drawn, then their values are compared, then the winner is decided. At a tie, a do-over round is completed. Then, if either player has no deck, their trophy pile is shuffled into a new one. If they have no trophy pile, they loose.
   $('.drawButton').on('click', draw );
   $('.pDeck').on('click', draw);
@@ -181,10 +189,8 @@ $(function(){
       $('.outcome').removeClass('none').html('War!');
 
       //the drawn cards are moved into the loot pile
-      playerLoot.push(playerDraw[0]);
-      comLoot.push(comDraw[0]);
-      playerDraw.shift();
-      comDraw.shift();
+      playerLoot.push(playerDraw.shift());
+      comLoot.push(comDraw.shift());
 
       $('.draw').addClass('toLoot1');
 
@@ -192,6 +198,8 @@ $(function(){
       if (playerDeck.length == 0){
         if (playerTrophy.length != 0){
           playerDeck = shuffle(playerTrophy);
+          $('.playerDeck').removeClass('none');
+          $('.playerTrophy').addClass('none');
         } else {
           $('.outcome').html("Stalemate!");
           return;
@@ -200,6 +208,8 @@ $(function(){
       if (comDeck.length == 0){
         if (comTrophy.length != 0){
           comDeck = shuffle(comTrophy);
+          $('.comDeck').removeClass('none');
+          $('.comTrophy').addClass('none');
         } else {
           $('.outcome').html("Stalemate!");
           return;
@@ -211,46 +221,36 @@ $(function(){
       setTimeout(function(){
 
       //If at least four cards can be drawn, three cards are moved from the deck to the loot pile
-      if (playerDeck.length > 4 && comDeck.length > 4){
+      if (playerDeck.length >= 4 && comDeck.length >= 4){
         for (i=1; i < 4; i++) {
-          playerLoot.push(playerDeck[i]);
-          comLoot.push(comDeck[i]);
+          playerLoot.push(playerDeck.shift());
+          comLoot.push(comDeck.shift());
 
           $('.tie'+i).addClass('toLoot'+i);
         };
 
-        playerDeck.splice(0, 3);
-        comDeck.splice(0, 3);
         tie = 4;
-      };
-
-      //if either deck has two cards, one card is moved to loot pile
-      if (playerDeck.length == 2 || comDeck.length == 2){
-        playerLoot.push(playerDeck[0]);
-        comLoot.push(comDeck[0]);
+      } else if(playerDeck.length == 2 || comDeck.length == 2) {
+        //if either deck has two cards, one card is moved to loot pile
+        playerLoot.push(playerDeck.shift());
+        comLoot.push(comDeck.shift());
 
         $('.tie1').addClass('toLoot1');
         $('.tie2').addClass('none');
         $('.tie3').addClass('none');
 
-        playerDeck.shift();
-        comDeck.shift();
         tie = 2;
-      };
-
-      //if either deck has three cards, two cards are moved to the loot pile
-      if (playerDeck.length == 3 || comDeck.length == 3){
+      } else if (playerDeck.length == 3 || comDeck.length == 3){
+        //if either deck has three cards, two cards are moved to the loot pile
         for (i=1; i < 3; i++) {
-          playerLoot.push(playerDeck[i]);
-          comLoot.push(comDeck[i]);
+          playerLoot.push(playerDeck.shift());
+          comLoot.push(comDeck.shift());
 
           $('.tie'+i).addClass('toLoot'+i);
         };
 
         $('.tie3').addClass('none');
 
-        playerDeck.splice(0, 2);
-        comDeck.splice(0, 2);
         tie = 3;
       };
 
@@ -258,6 +258,7 @@ $(function(){
 
       busy = 0;
       $('.draw').removeClass('flip toLoot1');
+      scoreBoard();
       return;
     }, 1000);
 
@@ -295,9 +296,7 @@ $(function(){
       if (playerTrophy.length == 0){
         var trophy = 1;
       }
-      playerTrophy.push(playerDraw[0], comDraw[0]);
-      playerDraw.shift();
-      comDraw.shift();
+      playerTrophy.push(playerDraw.shift(), comDraw.shift());
 
       $('.pDraw').removeClass('flip').addClass('toMyTrophy');
       $('.cDraw').removeClass('flip').addClass('toTheirTrophy');
@@ -306,19 +305,14 @@ $(function(){
       };
 
       for (i=1; i != tie; i++){
-        $('.pLoot.tie'+i).removeClass('toLoot'+i).addClass('toMyTrophy');
-        $('.cLoot.tie'+i).removeClass('toLoot'+i).addClass('toTheirTrophy');
+        $('.pLoot .tie'+i).removeClass('toLoot'+i).addClass('toMyTrophy');
+        $('.cLoot .tie'+i).removeClass('toLoot'+i).addClass('toTheirTrophy');
       };
 
-      playerLoot.forEach(function(element){
-        playerTrophy.push(element);
-        playerLoot.splice(element, 1);
-      });
-
-      comLoot.forEach(function(element){
-        playerTrophy.push(element);
-        comLoot.splice(element, 1);
-      });
+      while(playerLoot.length) {
+        playerTrophy.push(playerLoot.shift());
+        playerTrophy.push(comLoot.shift());
+      };
 
     } else {
 
@@ -326,9 +320,7 @@ $(function(){
       if (comTrophy.length == 0){
         var trophy = 1;
       }
-      comTrophy.push(playerDraw[0], comDraw[0]);
-      playerDraw.shift();
-      comDraw.shift();
+      comTrophy.push(playerDraw.shift(), comDraw.shift());
 
       $('.cDraw').removeClass('flip').addClass('toMyTrophy');
       $('.pDraw').removeClass('flip').addClass('toTheirTrophy');
@@ -337,8 +329,13 @@ $(function(){
       };
 
       for (i=1; i != tie; i++){
-        $('.cLoot.tie'+i).removeClass('toLoot'+i).addClass('toMyTrophy');
-        $('.pLoot.tie'+i).removeClass('toLoot'+i).addClass('toTheirTrophy');
+        $('.cLoot .tie'+i).removeClass('toLoot'+i).addClass('toMyTrophy');
+        $('.pLoot .tie'+i).removeClass('toLoot'+i).addClass('toTheirTrophy');
+      };
+
+      while(playerLoot.length) {
+        comTrophy.push(playerLoot.shift());
+        comTrophy.push(comLoot.shift());
       };
 
       playerLoot.forEach(function(element){
@@ -367,7 +364,7 @@ $(function(){
         $('.pTrophy').addClass('none');
         playerDeck = shuffle(playerTrophy);
       } else {
-        $('.outcome').html('You lose :(')
+        $('.outcome').removeClass('none').html('You lose :(')
       };
     };
 
@@ -377,7 +374,7 @@ $(function(){
         $('.cTrophy').addClass('none');
         comDeck = shuffle(comTrophy);
       } else {
-        $('.outcome').html('You win :)')
+        $('.outcome').removeClass('none').html('You win :)')
       };
     };
 
@@ -388,8 +385,8 @@ $(function(){
         $('.tie').addClass('none');
 
         for (i=1; i != tie; i++){
-          $('.pLoot.tie'+i).removeClass('toMyTrophy');
-          $('.cLoot.tie'+i).removeClass('toTheirTrophy');
+          $('.pLoot .tie'+i).removeClass('toMyTrophy');
+          $('.cLoot .tie'+i).removeClass('toTheirTrophy');
         };
       }, 600);
     } else {
@@ -399,16 +396,12 @@ $(function(){
         $('.tie').addClass('none');
 
         for (i=1; i != tie; i++){
-          $('.cLoot.tie'+i).removeClass('toMyTrophy');
-          $('.pLoot.tie'+i).removeClass('toTheirTrophy');
+          $('.cLoot .tie'+i).removeClass('toMyTrophy');
+          $('.pLoot .tie'+i).removeClass('toTheirTrophy');
         };
       }, 600);
     };
-
-    $('.pScoreDeck').html(playerDeck.length);
-    $('.pScoreTrophy').html(playerTrophy.length);
-    $('.cScoreDeck').html(comDeck.length);
-    $('.cScoreTrophy').html(comTrophy.length);
+    scoreBoard();
   };
 
 })
