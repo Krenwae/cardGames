@@ -34,6 +34,9 @@ $(function(){
   var comLoot = [];
   //When their deck runs out, they reshuffle their trophy pile and use that. The winner is whomever owns all 52 cards in their collective deck/trophy piles
 
+  //a few aethstetic stuff
+  scoreBoard();
+
 
   //This function builds the decks, including all relevant information including a card's numeric value, it's representative value, it's suit, a picture of that suit, and the suit's "color code"(0-1 for black, 2-3 for red)
   function buildDeck(arr){
@@ -89,12 +92,16 @@ $(function(){
     });
   };
 
-  //this function displays the current score
+  //this function displays the current score and adjusts the shadows of the card piles
   function scoreBoard() {
     $('.pScoreDeck').html(playerDeck.length);
     $('.pScoreTrophy').html(playerTrophy.length);
     $('.cScoreDeck').html(comDeck.length);
     $('.cScoreTrophy').html(comTrophy.length);
+    $('.pDeck').css('border-bottom-width', playerDeck.length / 2);
+    $('.cDeck').css('border-top-width', comDeck.length / 2);
+    $('.pTrophy').css('border-right-width', playerTrophy.length / 2);
+    $('.cTrophy').css('border-left-width', comTrophy.length / 2);
   }
 
   //This function runs the comparison feature of the game. When a button is pushed, the cards are drawn, then their values are compared, then the winner is decided. At a tie, a do-over round is completed. Then, if either player has no deck, their trophy pile is shuffled into a new one. If they have no trophy pile, they loose.
@@ -149,6 +156,7 @@ $(function(){
 
     //declare winner as player(true) or com(false)
     winner = compare(playerDraw[0].num, comDraw[0].num);
+
   };
 
   //move cards to trophy pile depending on winner
@@ -258,6 +266,7 @@ $(function(){
 
       busy = 0;
       $('.draw').removeClass('flip toLoot1');
+
       scoreBoard();
       return;
     }, 1000);
@@ -350,10 +359,7 @@ $(function(){
 
     };
 
-    $('.pScoreDeck').html(playerDeck.length);
-    $('.pScoreTrophy').html(playerTrophy.length);
-    $('.cScoreDeck').html(comDeck.length);
-    $('.cScoreTrophy').html(comTrophy.length);
+    scoreBoard();
   };
 
   function reshuffle(input) {
@@ -401,6 +407,7 @@ $(function(){
         };
       }, 600);
     };
+
     scoreBoard();
   };
 
