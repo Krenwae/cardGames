@@ -187,6 +187,12 @@ $(function(){
     }, 800);
   };
 
+  //this function reloads the page after someone wins
+  $('.reloadButton').on('click', newGame);
+  function newGame(){
+    location.reload();
+  }
+
   //this function compares two drawn cards. If player wins, return true. if com wins, return false.
   function compare(card1, card2) {
 
@@ -210,6 +216,7 @@ $(function(){
           $('.playerTrophy').addClass('none');
         } else {
           $('.outcome').html("Stalemate!");
+          $('.reloadButton').removeClass('none');
           return;
         }
       };
@@ -220,6 +227,7 @@ $(function(){
           $('.comTrophy').addClass('none');
         } else {
           $('.outcome').html("Stalemate!");
+          $('.reloadButton').removeClass('none');
           return;
         }
       };
@@ -371,6 +379,7 @@ $(function(){
         playerDeck = shuffle(playerTrophy);
       } else {
         $('.outcome').removeClass('none').html('You lose :(')
+        $('.reloadButton').removeClass('none');
       };
     };
 
@@ -381,6 +390,7 @@ $(function(){
         comDeck = shuffle(comTrophy);
       } else {
         $('.outcome').removeClass('none').html('You win :)')
+        $('.reloadButton').removeClass('none');
       };
     };
 
